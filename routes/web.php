@@ -3,6 +3,7 @@
 use App\Http\Controllers\JobShowController;
 use App\Livewire\CreateJob;
 use App\Livewire\JobList;
+use App\Livewire\UpdateJob;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,5 @@ Route::get('/', function () {
 //  })->name('job.show');
 
  Route::get('job/{job}',[JobShowController::class,'show'])->name('job.show');
+
+ Route::get('job/edit/{id}',UpdateJob::class)->name('job.edit');

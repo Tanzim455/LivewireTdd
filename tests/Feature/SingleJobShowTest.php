@@ -17,7 +17,7 @@ class SingleJobShowTest extends TestCase
     {
        $this->withoutExceptionHandling();
         $job=Job::factory()->create();
-        $response=$this->get(route('job.show',['job'=>$job->title]));
+        $response=$this->get(route('job.show',['job'=>$job->id]));
        
         $response->assertOk()
         ->assertViewIs('job.show')
