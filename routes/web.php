@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobShowController;
 use App\Livewire\CreateJob;
 use App\Livewire\JobList;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,9 @@ Route::get('/', function () {
  Route::get('jobs/create',CreateJob::class)->name('jobs.create');
 
  Route::get('jobs',JobList::class)->name('jobs.index');
+
+//  Route::get('job/{title}',function(){
+//    echo "Job Show";
+//  })->name('job.show');
+
+ Route::get('job/{job}',[JobShowController::class,'show'])->name('job.show');

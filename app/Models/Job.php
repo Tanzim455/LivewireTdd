@@ -12,4 +12,7 @@ class Job extends Model
     public $fillable=['title','description','min_experience','max_experience','min_salary','max_salary','apply_url',
     'expiration_date'
 ];
+public function getRouteKeyName() {
+    return 'title';
+  }
 }
