@@ -12,6 +12,7 @@ use Tests\TestCase;
 class JobListTest extends TestCase
 {
     /** @test */
+    use RefreshDatabase;
     public function renders_successfully()
     {
         Livewire::test(JobList::class)
@@ -46,6 +47,17 @@ class JobListTest extends TestCase
         ->assertViewHas('jobs')
         
         ;
+    }
+    public function test_jobs_can_be_deleted(){
+
+        $job=Job::factory()->create();
+        $jobToArray=$job->toArray();
+        
+        Livewire::test(JobList::class)
+       ->call('delete',$job->id);
+
+       $this->assertEquals(0,Job::count());
+         $this->assertDatabaseMissing('jobs',$jobToArray);
     }
 
 
