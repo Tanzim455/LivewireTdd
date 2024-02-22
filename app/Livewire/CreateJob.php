@@ -29,18 +29,7 @@ class CreateJob extends Component
  
     public function save(){
          $validated=$this->validate();
-        // Job::create([
-        //   'title'=>$this->title,
-        //   'description'=>$this->description,
-        //   'min_experience'=>$this->min_experience,
-        //   'max_experience'=>$this->max_experience,
-        //   'min_salary'=>$this->min_salary,
-        //   'max_salary'=>$this->max_salary,
-        //   'apply_url'=>$this->apply_url,
-        //   'expiration_date'=>$this->expiration_date
         
-
-        // ]);
         Job::create($validated);
     }
     protected function rules(): array

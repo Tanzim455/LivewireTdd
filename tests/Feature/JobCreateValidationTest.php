@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\CreateJob;
 use App\Models\Job;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
@@ -14,9 +15,9 @@ class JobCreateValidationTest extends TestCase
     /**
      * A basic feature test example.
      */
-    use RefreshDatabase;
+     use RefreshDatabase;
     public function test_all_required_fields_for_posting_a_job(){
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
     
         
        $response=Livewire::test(CreateJob::class)
@@ -33,6 +34,38 @@ class JobCreateValidationTest extends TestCase
         $response->assertHasErrors('title', 'description', 'min_experience',
         'max_experience','max_salary','min_salary','apply_url','expiration_date'
     );
+    
+        
+    }
+
+    public function test_apply_url_must_be_a_relevant_link(){
+        
+        $job=Job::factory()->make()->toArray();
+
+         $job['apply_url']='Website Link';
+         
+
+        $response=Livewire::test(CreateJob::class)
+        ->set($job)
+        ->call('save');
+
+        $response->assertHasErrors('apply_url');
+
+        
+    }
+    public function test_expiration_date_cannot_be_less_than_present_date(){
+        
+        $job=Job::factory()->make()->toArray();
+
+         $job['expiration_date']=Carbon::now()->subDay(1)->format('Y-m-d');
+         
+
+        $response=Livewire::test(CreateJob::class)
+        ->set($job)
+        ->call('save');
+
+        $response->assertHasErrors('expiration_date');
+
         
     }
 }

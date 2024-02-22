@@ -25,11 +25,11 @@ class JobPostRequest extends FormRequest
             //
             'title'=>'required|min:10',
             'description'=>'required|min:100',
-            'min_salary'=>'required|int',
-            'max_salary'=>'required|int',
-             'min_experience'=>'required|int',
-             'max_experience'=>'required|int',
-             'expiration_date'=>'required|date',
+            'min_salary'=>'required|integer',
+            'max_salary'=>'required|integer',
+             'min_experience'=>'required|integer',
+             'max_experience'=>'required|integer',
+             'expiration_date'=>'required|date|after_or_equal:today',
              'apply_url'=>'required|url'
         ];
     }
