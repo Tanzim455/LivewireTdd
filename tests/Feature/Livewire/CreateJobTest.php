@@ -27,23 +27,16 @@ class CreateJobTest extends TestCase
     public function test_user_can_post_a_job(){
         $this->withoutExceptionHandling();
         $job=Job::factory()->make()->toArray();
-       
-        // Livewire::test(CreateJob::class)
-        // ->set([
-        //     'title'=>'Laravel Developer',
-        //      'description'=>'Mid level',
         
-        // ])
-        // ->call('save');
+       
         Livewire::test(CreateJob::class)
         ->set($job)
         ->call('save');
            
          $this->assertEquals(1,Job::count());
          
-        $this->assertDatabaseHas('jobs',[
-              'title'=>$job['title'],
-              'description'=>$job['description']
-        ]);
+       
+        
+        $this->assertDatabaseHas('jobs',$job);
     }
 }

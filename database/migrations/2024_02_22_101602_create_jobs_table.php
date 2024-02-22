@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->integer('min_experience');
+            $table->integer('max_experience');
+            $table->integer('min_salary');
+            $table->integer('max_salary');
+            $table->string('apply_url')->nullable();
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }
