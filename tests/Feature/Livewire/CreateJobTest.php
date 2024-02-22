@@ -25,7 +25,7 @@ class CreateJobTest extends TestCase
     }
 
     public function test_user_can_post_a_job(){
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $job=Job::factory()->make()->toArray();
         
        
@@ -34,9 +34,6 @@ class CreateJobTest extends TestCase
         ->call('save');
            
          $this->assertEquals(1,Job::count());
-         
-       
-        
         $this->assertDatabaseHas('jobs',$job);
     }
 }
