@@ -8,16 +8,26 @@ use Livewire\Component;
 class UpdateJob extends Component
 {
     public $title;
-    public $postId;
-    
-     public function update($id){
-         $job=Job::findorFail($id);
-         $job->update([
-            'title'=>$this->title,
-             
-         ]);
+     public ?Job $job;
+    public $name;
+ 
+    public function mount()
+    {
+        $this->job;
+    }
+   
+       
+        
+        public function update(){
+            $this->job->update([
+                'title' => $this->title,
+            ]);
+            
+            
+        }
+        
          
-     }
+     
     public function render()
     {
         

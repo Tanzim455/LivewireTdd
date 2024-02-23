@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JobShowController;
+use App\Livewire\Counter;
 use App\Livewire\CreateJob;
 use App\Livewire\JobList;
 use App\Livewire\UpdateJob;
@@ -30,4 +31,6 @@ Route::get('/', function () {
 
  Route::get('job/{job}',[JobShowController::class,'show'])->name('job.show');
 
- Route::get('job/edit/{id}',UpdateJob::class)->name('job.edit');
+ Route::get('job/edit/{job}',UpdateJob::class)->name('job.edit');
+
+ Route::get('counter',Counter::class);
