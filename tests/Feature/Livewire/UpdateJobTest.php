@@ -15,7 +15,7 @@ class UpdateJobTest extends TestCase
     use RefreshDatabase;
     public function test_company_can_update_a_job()
 {
-    $this->withoutExceptionHandling();
+
     $job=Job::factory()->create();
     
     
