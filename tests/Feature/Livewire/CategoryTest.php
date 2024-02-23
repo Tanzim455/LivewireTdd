@@ -66,11 +66,11 @@ class CategoryTest extends TestCase
     }
 
   
-        public function test_company_can_update_a_category()
+        public function test_admin_can_update_a_category()
         {
             $this->withoutExceptionHandling();
             $category=ModelsCategory::factory()->create();
-            
+            dump($category->name);
             
             $response = Livewire::test(Category::class)
                 ->set('category', $category) // Set the job property
@@ -78,11 +78,17 @@ class CategoryTest extends TestCase
                 ->call('update',$category->id); // Now you can call the update method
              
             $response->assertOk();
-            
-              $this->assertNotEquals($category->name,'Updated Title');
-              $this->assertNotEquals($category->fresh()->name,'Updated Title');
+             
+              $this->assertNotEquals($category->name,'Updated Category');
+              $this->assertEquals($category->fresh()->name,'Updated Category');
 
-           
+              $this->assertDatabaseHas('categories',[
+                'name'=>$category->fresh()->name
+          ]);
+          $this->assertDatabaseMissing('categories',[
+             'name'=>$category->name,
+             
+       ]);
         }
     }
 
