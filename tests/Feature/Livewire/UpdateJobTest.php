@@ -13,16 +13,29 @@ class UpdateJobTest extends TestCase
 {
     /** @test */
     use RefreshDatabase;
-    public function test_company_can_update_a_post()
+    public function test_company_can_update_a_job()
 {
     $this->withoutExceptionHandling();
     $job=Job::factory()->create();
-    $job->update([
-       'title'=>'Updated title'
-    ]);
     
-    Livewire::test(UpdateJob::class)
-      ->call('update',$job->id)
-      ->set('title', 'Updated Title again');
+    
+    $response = Livewire::test(UpdateJob::class)
+        ->set('job', $job) // Set the job property
+        ->set('title', 'Updated Title') // Set the title property
+        ->call('update'); // Now you can call the update method
+     
+    $response->assertOk();
+    //The title with which job was created
+     $this->assertNotEquals($job->title,'Updated Title');
+     //The title which was updated
+     $this->assertEquals($job->fresh()->title,'Updated Title');
+
+     $this->assertDatabaseHas('jobs',[
+           'title'=>$job->fresh()->title
+     ]);
+     $this->assertDatabaseMissing('jobs',[
+        'title'=>$job->title,
+        
+  ]);
 }
 }

@@ -9,21 +9,17 @@ class UpdateJob extends Component
 {
     public $title;
      public ?Job $job;
-    public $name;
+    
  
-    public function mount()
-    {
-        $this->job;
-    }
-   
+    
        
         
         public function update(){
-            $this->job->update([
+             $this->job->update([
                 'title' => $this->title,
             ]);
             
-            
+            $this->reset('title');
         }
         
          
