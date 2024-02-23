@@ -10,7 +10,7 @@ class Job extends Model
     use HasFactory;
 
     public $fillable=['title','description','min_experience','max_experience','min_salary','max_salary','apply_url',
-    'expiration_date'
+    'expiration_date','job_location','job_location_type'
 ];
 // public function getRouteKeyName() {
 //     return 'title';

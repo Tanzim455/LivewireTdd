@@ -30,7 +30,9 @@ class JobPostRequest extends FormRequest
              'min_experience'=>'required|integer',
              'max_experience'=>'required|integer',
              'expiration_date'=>'required|date|after_or_equal:today',
-             'apply_url'=>'required|url'
+             'apply_url'=>'required|url',
+             'job_location'=>'required',
+             'job_location_type'=>'required'
         ];
     }
 }

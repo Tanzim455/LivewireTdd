@@ -26,7 +26,10 @@ class JobFactory extends Factory
               'min_salary'=>fake()->numberBetween(10000,20000),
               'max_salary'=>fake()->numberBetween(30000,60000),
               'apply_url'=>fake()->url(),
-              'expiration_date'=>Carbon::now()->addDay()->format('Y-m-d')
+              'expiration_date'=>Carbon::now()->addDay()->format('Y-m-d'),
+               'job_location'=>fake()->address(),
+               'job_location_type' => fake()->randomElement(['remote', 'onsite', 'hybrid'])
+
         ];
     }
 }

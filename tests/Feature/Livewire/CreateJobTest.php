@@ -24,7 +24,7 @@ class CreateJobTest extends TestCase
             ->assertSeeLivewire(CreateJob::class);
     }
 
-    public function test_user_can_post_a_job(){
+    public function test_company_can_post_a_job(){
         // $this->withoutExceptionHandling();
         $job=Job::factory()->make()->toArray();
         

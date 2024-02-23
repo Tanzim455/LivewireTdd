@@ -24,6 +24,10 @@ class CreateJob extends Component
      public  $apply_url='';
     
       public $expiration_date='';
+
+      public $job_location='';
+
+      public $job_location_type='';
       
    
  

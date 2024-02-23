@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('max_salary');
             $table->string('apply_url')->nullable();
             $table->date('expiration_date');
+            $table->string('job_location');
+            $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
             $table->timestamps();
         });
     }
