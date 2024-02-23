@@ -21,7 +21,13 @@ class CategoryTest extends TestCase
     public function test_category_component_exists_for_specific_route(){
         // $this->withoutExceptionHandling();
         $this->get(route('category'))
+             
             ->assertSeeLivewire(Category::class);
+    }
+    public function test_render_function_returns_a_view(){
+        Livewire::test(Category::class)
+        ->assertViewHas('categories')
+        ->assertViewIs('livewire.category');
     }
     
     public function test_admin_can_create_a_category(){

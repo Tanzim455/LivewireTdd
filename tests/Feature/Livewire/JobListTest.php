@@ -23,11 +23,12 @@ class JobListTest extends TestCase
         // $this->withoutExceptionHandling();
         $this->get(route('jobs.index'))
             ->assertSeeLivewire(JobList::class);
+          
     }
 
     public function test_render_function_returns_a_view(){
         Livewire::test(JobList::class)
-        
+        ->assertViewHas('jobs')
         ->assertViewIs('livewire.job-list');
     }
 

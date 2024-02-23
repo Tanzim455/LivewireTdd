@@ -5,6 +5,7 @@ use App\Livewire\Category;
 use App\Livewire\Counter;
 use App\Livewire\CreateJob;
 use App\Livewire\JobList;
+use App\Livewire\Tags;
 use App\Livewire\UpdateJob;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,5 @@ Route::get('/', function () {
  Route::get('job/edit/{job}',UpdateJob::class)->name('job.edit');
 
  Route::get('category',Category::class)->name('category');
+
+ Route::get('tags',Tags::class)->name('tags');
