@@ -29,9 +29,16 @@ class CategoryTest extends TestCase
         ->assertViewHas('categories')
         ->assertViewIs('livewire.category');
     }
+    // public function test_name_field_is_required_for_posting_a_category(){
+    //     $response=Livewire::test(Category::class)
+    //     ->call('save')
+    //     ->set('name','');
+
+    //     $response->assertHasErrors('name');
+    // }
     
     public function test_admin_can_create_a_category(){
-         $this->withoutExceptionHandling();
+        //  $this->withoutExceptionHandling();
         $category=ModelsCategory::factory()->make()->toArray();
             
        

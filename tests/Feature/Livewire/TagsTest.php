@@ -28,6 +28,13 @@ class TagsTest extends TestCase
         
         ->assertViewIs('livewire.tags');
     }
+    public function test_name_field_is_required_for_posting_a_job(){
+        $response=Livewire::test(Tags::class)
+        ->call('save')
+        ->set('name','');
+
+        $response->assertHasErrors('name');
+    }
     public function test_admin_can_create_a_tag(){
         $this->withoutExceptionHandling();
        $tag=Tag::factory()->make()->toArray();
