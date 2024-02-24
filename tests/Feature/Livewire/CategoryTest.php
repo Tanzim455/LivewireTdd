@@ -38,16 +38,16 @@ class CategoryTest extends TestCase
     // }
     
     public function test_admin_can_create_a_category(){
-         $this->withoutExceptionHandling();
+         
         $category=ModelsCategory::factory()->make()->toArray();
             
        
-        Livewire::test(Category::class)
+       Livewire::test(Category::class)
         ->set($category)
         ->call('savecategory');
            
-        //    $this->assertEquals(1,ModelsCategory::count());
-        $this->assertDatabaseHas('categories',$category);
+            $this->assertEquals(1,ModelsCategory::count());
+         $this->assertDatabaseHas('categories',$category);
     }
     public function test_admin_can_delete_a_category(){
         $this->withoutExceptionHandling();
