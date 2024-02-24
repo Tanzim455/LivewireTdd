@@ -73,32 +73,52 @@ class JobCreateValidationTest extends TestCase
         
     }
 
-    public function test_min_max_years_of_experience_must_be_a_number(){
+    public function test_min_max_experience_must_be_a_number(){
         $job=Job::factory()->make()->toArray();
-         $job['min_experience']='Four';
-         $job['max_experience']='Five';
+         $job['min_experience']='Fourty thousand';
+         $job['max_experience']='Fifty Thousand';
         
-        Livewire::test(CreateJob::class)
+        $response=Livewire::test(CreateJob::class)
         ->set($job)
         ->call('save');
         
         
-        $this->assertEquals(0,Job::count());
+        
+        $response->assertHasErrors('min_experience','max_experience');
        
         
     }
     public function test_min_max_salary_must_be_a_number(){
         $job=Job::factory()->make()->toArray();
          $job['min_salary']='Fourty thousand';
-         $job['max_salary']='Fivety Thousand';
+         $job['max_salary']='Fifty Thousand';
         
-        Livewire::test(CreateJob::class)
+        $response=Livewire::test(CreateJob::class)
         ->set($job)
         ->call('save');
         
         
-        $this->assertEquals(0,Job::count());
-       
+        
+       $response->assertHasErrors('min_salary','max_salary');
         
     }
+
+    public function test_job_location_type_must_remote_onsite_or_hybrid()
+    {
+        $job=Job::factory()->make()->toArray();
+        
+        // $job['job_location_type']='office';
+         $job['job_location_type']='Office';
+
+          
+       
+       $response=Livewire::test(CreateJob::class)
+       ->set($job)
+       ->call('save');
+       
+        $response->assertHasErrors('job_location_type');
+      
+    //   $response->assertHasErrors('min_salary');
+    }
+   
 }
