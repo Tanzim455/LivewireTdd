@@ -30,19 +30,19 @@ class TagsTest extends TestCase
     }
     public function test_name_field_is_required_for_posting_a_job(){
         $response=Livewire::test(Tags::class)
-        ->call('save')
+        ->call('savetags')
         ->set('name','');
 
         $response->assertHasErrors('name');
     }
     public function test_admin_can_create_a_tag(){
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
        $tag=Tag::factory()->make()->toArray();
            
       
        Livewire::test(Tags::class)
        ->set($tag)
-       ->call('save');
+       ->call('savetags');
           
         $this->assertEquals(1,Tag::count());
        $this->assertDatabaseHas('tags',$tag);

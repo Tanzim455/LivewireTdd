@@ -9,7 +9,7 @@ class Tags extends Component
 {
     
    public $name;
-    public function save(){
+    public function savetags(){
         $this->validate([
              'name'=>'required|min:3'
         ]);

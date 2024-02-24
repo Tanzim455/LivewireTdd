@@ -9,7 +9,7 @@ class Category extends Component
 {
     public $name;
 
-    public function save(){
+    public function savecategory(){
         $this->validate([
              'name'=>'required|min:3'
         ]);
