@@ -39,4 +39,20 @@ class CreateJobTest extends TestCase
          $this->assertEquals(1,Job::count());
         $this->assertDatabaseHas('jobs',$job);
     }
+    public function test_category_belongs_to_a_job(){
+         $this->withoutExceptionHandling();
+        
+         $job=Job::factory()->make()->toArray();
+        
+        $category=Category::factory()->create();
+        $job['category_id']=$category['id'];
+        
+       Livewire::test(CreateJob::class)
+       ->set($job)
+       ->call('save');
+        $latestJob=Job::latest()->first();
+        
+        $this->assertEquals(1,Job::count());
+          $this->assertInstanceOf(Category::class,$latestJob->category);
+   }
 }
