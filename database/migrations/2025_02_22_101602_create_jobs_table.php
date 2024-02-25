@@ -24,11 +24,10 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->string('job_location');
             $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
-           
-
-            $table->timestamps();
+            $table->unsignedBigInteger('category_id')->references('id')->on('categories');
+            $table->softDeletes();
+          
+             $table->timestamps();
         });
     }
 

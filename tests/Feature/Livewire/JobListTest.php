@@ -54,13 +54,17 @@ class JobListTest extends TestCase
         ;
     }
     public function test_jobs_can_be_deleted(){
+        $this->withoutExceptionHandling();
         $category=Category::factory()->create();
         $job = Job::factory()->create(['category_id' => $category->id]);
-    
-        Livewire::test(JobList::class)
+        
+    Livewire::test(JobList::class)
         ->call('delete', $job->id);
-
-    $this->assertEquals(0, Job::count());
+        
+        $deletedJob = Job::withTrashed()->find($job->id);
+        $this->assertNotNull($deletedJob->deleted_at);
+        $this->assertSoftDeleted('jobs', ['id' => $job->id]);
+        //Check at what time softdelete was done
         
     }
     
