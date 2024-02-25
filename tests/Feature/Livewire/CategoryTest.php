@@ -61,7 +61,7 @@ class CategoryTest extends TestCase
        $this->assertEquals(0,ModelsCategory::count());
          $this->assertDatabaseMissing('categories',$categoryToArray);
     }
-    public function test_all_jobs_can_be_seen_by_companies_from_their_dashboard(){
+    public function test_all_categories_can_be_seen_by_companies_from_their_dashboard(){
         
         $category1=ModelsCategory::factory()->create();
         $category2=ModelsCategory::factory()->create();

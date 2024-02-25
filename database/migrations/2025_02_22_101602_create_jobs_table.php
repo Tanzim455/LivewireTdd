@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,11 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->string('job_location');
             $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
+             //$table->foreignIdFor(Category::class)->onDelete('cascade');
+             $table->unsignedBigInteger('category_id')->references('id')->on('categories');
+        //  $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

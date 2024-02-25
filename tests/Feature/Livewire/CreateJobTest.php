@@ -3,6 +3,7 @@
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\CreateJob;
+use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,10 +26,12 @@ class CreateJobTest extends TestCase
     }
 
     public function test_company_can_post_a_job(){
-        // $this->withoutExceptionHandling();
-        $job=Job::factory()->make()->toArray();
+         $this->withoutExceptionHandling();
+         $job=Job::factory()->make()->toArray();
+         
+        $category=Category::factory()->create();
+        $job['category_id']=$category['id'];
         
-       
         Livewire::test(CreateJob::class)
         ->set($job)
         ->call('save');

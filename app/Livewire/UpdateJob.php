@@ -8,11 +8,12 @@ use Livewire\Component;
 class UpdateJob extends Component
 {
     public $title;
-       public Job $job;
+        public Job $job;
     
  
     public function mount(Job $job){
         $this->title=$job->title;
+        
         
     }
        

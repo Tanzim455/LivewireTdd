@@ -3,6 +3,7 @@
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\JobList;
+use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -33,9 +34,12 @@ class JobListTest extends TestCase
     }
 
     public function test_all_jobs_can_be_seen_by_companies_from_their_dashboard(){
+        $this->withoutExceptionHandling();
+        $category=Category::factory()->create();
+        $job=Job::factory()->recycle($category)->create();
+        $job2=Job::factory()->recycle($category)->create();
+        
 
-        $job=Job::factory()->create();
-        $job2=Job::factory()->create();
         Livewire::test(JobList::class)
         ->assertSee([
             'title'=>$job->title,
@@ -50,15 +54,19 @@ class JobListTest extends TestCase
         ;
     }
     public function test_jobs_can_be_deleted(){
-
+        $this->withoutExceptionHandling();
         $job=Job::factory()->create();
-        $jobToArray=$job->toArray();
+       
+        $category=Category::factory()->create();
+        $job=Job::factory()->recycle($category)->create();
         
         Livewire::test(JobList::class)
        ->call('delete',$job->id);
 
-       $this->assertEquals(0,Job::count());
-         $this->assertDatabaseMissing('jobs',$jobToArray);
+       $this->assertEquals(1,Job::count());
+         $this->assertDatabaseHas('jobs',[
+            'deleted_at'=>$job['deleted_at']
+         ]);
     }
 
 

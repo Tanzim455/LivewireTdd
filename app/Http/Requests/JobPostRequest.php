@@ -32,7 +32,8 @@ class JobPostRequest extends FormRequest
              'expiration_date'=>'required|date|after_or_equal:today',
              'apply_url'=>'required|url',
              'job_location'=>'required',
-             'job_location_type'=>'required|in:remote,onsite,hybrid'
+             'job_location_type'=>'required|in:remote,onsite,hybrid',
+             'category_id'=>'required|integer'
         ];
     }
 }

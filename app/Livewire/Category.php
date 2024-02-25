@@ -25,7 +25,7 @@ class Category extends Component
         ]);
     }
     public function delete($id){
-    $category=ModelsCategory::find($id);
+    $category=ModelsCategory::findorFail($id);
         $category->delete();
      }
     public function render()

@@ -28,6 +28,8 @@ class CreateJob extends Component
       public $job_location='';
 
       public $job_location_type='';
+
+      public $category_id='';
       
    
  
