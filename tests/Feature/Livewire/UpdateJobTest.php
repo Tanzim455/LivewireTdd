@@ -3,6 +3,7 @@
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\UpdateJob;
+use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,9 +17,13 @@ class UpdateJobTest extends TestCase
     public function test_company_can_update_a_job()
 {
      $this->withoutExceptionHandling();
-    $job=Job::factory()->create();
     
+    $category=Category::factory()->create();
+    $job=Job::factory([
+        'category_id'=>$category->id
+    ])->create();
     
+   
     $response = Livewire::test(UpdateJob::class)
         ->set('job', $job) // Set the job property
         ->set('title', 'Updated Title') // Set the title property

@@ -36,9 +36,9 @@ class JobListTest extends TestCase
     public function test_all_jobs_can_be_seen_by_companies_from_their_dashboard(){
         $this->withoutExceptionHandling();
         $category=Category::factory()->create();
-        $job=Job::factory()->recycle($category)->create();
-        $job2=Job::factory()->recycle($category)->create();
-        
+        $category=Category::factory()->create();
+        $job = Job::factory()->create(['category_id' => $category->id]);
+        $job2 = Job::factory()->create(['category_id' => $category->id]);
 
         Livewire::test(JobList::class)
         ->assertSee([
@@ -54,20 +54,16 @@ class JobListTest extends TestCase
         ;
     }
     public function test_jobs_can_be_deleted(){
-        $this->withoutExceptionHandling();
-        $job=Job::factory()->create();
-       
         $category=Category::factory()->create();
-        $job=Job::factory()->recycle($category)->create();
-        
+        $job = Job::factory()->create(['category_id' => $category->id]);
+    
         Livewire::test(JobList::class)
-       ->call('delete',$job->id);
+        ->call('delete', $job->id);
 
-       $this->assertEquals(1,Job::count());
-         $this->assertDatabaseHas('jobs',[
-            'deleted_at'=>$job['deleted_at']
-         ]);
+    $this->assertEquals(0, Job::count());
+        
     }
+    
 
 
 }

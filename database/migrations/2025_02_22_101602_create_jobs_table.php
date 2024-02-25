@@ -24,10 +24,9 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->string('job_location');
             $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
-             //$table->foreignIdFor(Category::class)->onDelete('cascade');
-             $table->unsignedBigInteger('category_id')->references('id')->on('categories');
-        //  $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
-            $table->softDeletes();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+           
 
             $table->timestamps();
         });
@@ -39,5 +38,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('jobs');
+        
     }
 };
