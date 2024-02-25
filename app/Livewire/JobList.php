@@ -11,7 +11,7 @@ class JobList extends Component
     {
         $jobs=Job::select('id','title','description','min_experience','max_experience','min_salary','max_salary','apply_url',
         'expiration_date')->paginate(10);
-        return view('livewire.job-list',compact('jobs'));
+    return view('livewire.job-list',compact('jobs'));
     }
     
     public function delete($id){

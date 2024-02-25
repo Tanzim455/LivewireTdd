@@ -33,7 +33,8 @@ class JobPostRequest extends FormRequest
              'apply_url'=>'required|url',
              'job_location'=>'required',
              'job_location_type'=>'required|in:remote,onsite,hybrid',
-             'category_id'=>'required|integer'
+             'category_id'=>'required|integer',
+             'company_id'=>'required|integer'
         ];
     }
 }

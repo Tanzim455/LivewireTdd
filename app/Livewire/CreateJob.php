@@ -31,7 +31,7 @@ class CreateJob extends Component
 
       public $category_id='';
       
-   
+     public $company_id='';
  
     public function save(){
          $validated=$this->validate();

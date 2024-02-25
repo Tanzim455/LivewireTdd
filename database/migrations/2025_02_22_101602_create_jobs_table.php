@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('job_location');
             $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
             $table->unsignedBigInteger('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('company_id')->references('id')->on('companies');
             $table->softDeletes();
           
              $table->timestamps();

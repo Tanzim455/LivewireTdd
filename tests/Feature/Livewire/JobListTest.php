@@ -64,7 +64,7 @@ class JobListTest extends TestCase
         $deletedJob = Job::withTrashed()->find($job->id);
         $this->assertNotNull($deletedJob->deleted_at);
         $this->assertSoftDeleted('jobs', ['id' => $job->id]);
-        //Check at what time softdelete was done
+        
         
     }
     

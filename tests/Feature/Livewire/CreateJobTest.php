@@ -4,6 +4,7 @@ namespace Tests\Feature\Livewire;
 
 use App\Livewire\CreateJob;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -28,25 +29,29 @@ class CreateJobTest extends TestCase
     public function test_company_can_post_a_job(){
          $this->withoutExceptionHandling();
          $job=Job::factory()->make()->toArray();
+         $company=Company::factory()->create();
          
-        $category=Category::factory()->create();
-        $job['category_id']=$category['id'];
+         $category=Category::factory()->create();
+         $job['category_id']=$category['id'];
+         $job['company_id']=$company['id'];
+        // $job['company_id']=2;
         
         Livewire::test(CreateJob::class)
         ->set($job)
         ->call('save');
            
-         $this->assertEquals(1,Job::count());
-        $this->assertDatabaseHas('jobs',$job);
+          $this->assertEquals(1,Job::count());
+         $this->assertDatabaseHas('jobs',$job);
     }
     public function test_category_belongs_to_a_job(){
          $this->withoutExceptionHandling();
+        $company=Company::factory()->create();
         
          $job=Job::factory()->make()->toArray();
         
         $category=Category::factory()->create();
         $job['category_id']=$category['id'];
-        
+        $job['company_id']=$company['id'];
        Livewire::test(CreateJob::class)
        ->set($job)
        ->call('save');
@@ -55,4 +60,21 @@ class CreateJobTest extends TestCase
         $this->assertEquals(1,Job::count());
           $this->assertInstanceOf(Category::class,$latestJob->category);
    }
+   public function test_company_belongs_to_a_job(){
+    $this->withoutExceptionHandling();
+    $company=Company::factory()->create();
+    $job=Job::factory()->make()->toArray();
+   
+   $category=Category::factory()->create();
+   $job['category_id']=$category['id'];
+   $job['company_id']=$company['id'];
+   
+  Livewire::test(CreateJob::class)
+  ->set($job)
+  ->call('save');
+   $latestJob=Job::latest()->first();
+//    dd($latestJob->company);
+   $this->assertEquals(1,Job::count());
+       $this->assertInstanceOf(Company::class,$latestJob->company);
+}
 }
