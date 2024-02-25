@@ -43,7 +43,7 @@ class CreateJobTest extends TestCase
           $this->assertEquals(1,Job::count());
          $this->assertDatabaseHas('jobs',$job);
     }
-    public function test_category_belongs_to_a_job_and_company_belongs_to_a_job(){
+    public function test_category_belongs_to_a_job(){
          
         $company=Company::factory()->create();
         $category=Category::factory()->create();
