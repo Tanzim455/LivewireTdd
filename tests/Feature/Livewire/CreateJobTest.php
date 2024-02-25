@@ -61,21 +61,21 @@ class CreateJobTest extends TestCase
            $this->assertInstanceOf(Category::class,$latestJob->category);
         //   $this->assertInstanceOf(Company::class,$latestJob->company);
    }
-//    public function test_company_belongs_to_a_job(){
+   public function test_company_belongs_to_a_job(){
     
-//     $company=Company::factory()->create();
-//     $category=Category::factory()->create();
-//      $job=Job::factory()->make()->toArray();
-//    $job['category_id']=$category['id'];
-//    $job['company_id']=$company['id'];
+    $company=Company::factory()->create();
+    $category=Category::factory()->create();
+     $job=Job::factory()->make()->toArray();
+   $job['category_id']=$category['id'];
+   $job['company_id']=$company['id'];
    
-//   Livewire::test(CreateJob::class)
-//   ->set($job)
-//   ->call('save');
-//    $latestJob=Job::latest()->first();
+  Livewire::test(CreateJob::class)
+  ->set($job)
+  ->call('save');
+   $latestJob=Job::latest()->first();
     
  
-//    $this->assertEquals(1,Job::count());
-//     $this->assertInstanceOf(Company::class,$latestJob->company);   
-// }
+   $this->assertEquals(1,Job::count());
+    $this->assertInstanceOf(Company::class,$latestJob->company);   
+}
 }
