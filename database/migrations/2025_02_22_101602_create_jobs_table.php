@@ -24,8 +24,8 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->string('job_location');
             $table->enum('job_location_type',['remote', 'onsite', 'hybrid']);
-            $table->unsignedBigInteger('category_id')->references('id')->on('categories');
-            $table->unsignedBigInteger('company_id')->references('id')->on('companies');
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('company_id')->constrained();
             $table->softDeletes();
           
              $table->timestamps();
