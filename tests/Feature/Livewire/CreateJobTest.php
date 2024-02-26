@@ -61,6 +61,7 @@ class CreateJobTest extends TestCase
          $this->assertDatabaseHas('jobs',$job);
     }
     public function test_company_can_post_a_job_with_tags(){
+        
         $company=Company::factory()->create();
          Tag::factory()->create();
          $category=Category::factory()->create();

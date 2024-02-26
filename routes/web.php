@@ -4,6 +4,7 @@ use App\Http\Controllers\JobShowController;
 use App\Livewire\Category;
 use App\Livewire\Counter;
 use App\Livewire\CreateJob;
+use App\Livewire\HomePageJobList;
 use App\Livewire\JobList;
 use App\Livewire\Tags;
 use App\Livewire\UpdateJob;
@@ -27,10 +28,8 @@ Route::get('/', function () {
 
  Route::get('jobs',JobList::class)->name('jobs.index');
 
-//  Route::get('job/{title}',function(){
-//    echo "Job Show";
-//  })->name('job.show');
 
+Route::get('/home',HomePageJobList::class)->name('home');
  Route::get('job/{job}',[JobShowController::class,'show'])->name('job.show');
 
  Route::get('job/edit/{job}',UpdateJob::class)->name('job.edit');

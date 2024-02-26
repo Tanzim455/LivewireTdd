@@ -21,7 +21,7 @@ class JobListTest extends TestCase
        
             ->assertStatus(200);
     }
-    public function test_create_job_component_exists_for_specific_route(){
+    public function test_job_list_component_exists_for_specific_route(){
         // $this->withoutExceptionHandling();
         $this->get(route('jobs.index'))
             ->assertSeeLivewire(JobList::class);
