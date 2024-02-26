@@ -19,4 +19,9 @@ public function category(){
 public function company(){
     return $this->belongsTo(Company::class);
 }
+
+ public function tags()
+ {
+    return $this->belongsToMany(Tag::class)->as('tags');
+ }
 }

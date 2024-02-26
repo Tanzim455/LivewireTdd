@@ -32,11 +32,16 @@ class CreateJob extends Component
       public $category_id='';
       
      public $company_id='';
+     public $tags=[];
  
     public function save(){
          $validated=$this->validate();
         
-        Job::create($validated);
+        $job=Job::create($validated);
+
+        if (!empty($this->tags)) {
+            $job->tags()->attach($this->tags);
+        }
     }
     protected function rules(): array
     {
