@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class JobList extends Component
 {
+    public Job $job;
     public function render()
     {
         $jobs=Job::select('id','title','description','min_experience','max_experience','min_salary','max_salary','apply_url',
@@ -14,8 +15,8 @@ class JobList extends Component
     return view('livewire.job-list',compact('jobs'));
     }
     
-    public function delete($id){
-       $job=Job::find($id);
+    public function delete(Job $job){
+    
        $job->delete();
     }
 
