@@ -4,6 +4,7 @@ namespace Tests\Feature\Livewire;
 
 use App\Livewire\JobList;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -32,18 +33,33 @@ class JobListTest extends TestCase
         ->assertViewHas('jobs')
         ->assertViewIs('livewire.job-list');
     }
-
+    public function job_creation_by_company(?int $times=1){
+        $category=Category::factory()->create();
+        $company=Company::factory()->create();
+        
+         Job::factory(
+            $times,
+            [
+                'category_id'=>$category->id,
+                'company_id'=>$company->id
+            ]
+            
+         )->create();
+         
+    }
     public function test_all_jobs_can_be_seen_by_companies_from_their_dashboard(){
         $this->withoutExceptionHandling();
-        $category=Category::factory()->create();
-        $category=Category::factory()->create();
-        $job = Job::factory()->create(['category_id' => $category->id]);
-        $job2 = Job::factory()->create(['category_id' => $category->id]);
-
+        // 
+      $this->job_creation_by_company(times:2);
+         
+          $job1=Job::select('id','title','description')->first();
+        //find last id
+       
+        $job2=Job::select('id','title','description')->orderBy('id','desc')->first();
         Livewire::test(JobList::class)
         ->assertSee([
-            'title'=>$job->title,
-             'description'=>$job->description
+            'title'=>$job1->title,
+             'description'=>$job1->description
         ])
         ->assertSee([
             'title'=>$job2->title,
@@ -55,9 +71,9 @@ class JobListTest extends TestCase
     }
     public function test_jobs_can_be_deleted(){
         $this->withoutExceptionHandling();
-        $category=Category::factory()->create();
-        $job = Job::factory()->create(['category_id' => $category->id]);
-        
+       
+        $this->job_creation_by_company();
+        $job=Job::select('id','title','description')->first();
     Livewire::test(JobList::class)
         ->call('delete', $job->id);
         

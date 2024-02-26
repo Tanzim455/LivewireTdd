@@ -30,11 +30,12 @@ class JobCreateValidationTest extends TestCase
         ->set('apply_url','')
         ->set('expiration_date','')
         ->set('category_id','')
+        ->set('company_id','')
             ->call('save');
           
         $response->assertHasErrors('title', 'description', 'min_experience',
         'max_experience','max_salary','min_salary','apply_url','expiration_date',
-        'category_id'
+        'category_id','company_id'
     );
 
     
