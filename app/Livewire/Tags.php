@@ -11,7 +11,7 @@ class Tags extends Component
    public $name;
     public function savetags(){
         $this->validate([
-             'name'=>'required|min:3'
+            'name'=>'required|min:3|unique:tags'
         ]);
         
         Tag::create([

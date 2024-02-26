@@ -47,6 +47,30 @@ class TagsTest extends TestCase
         $this->assertEquals(1,Tag::count());
        $this->assertDatabaseHas('tags',$tag);
    }
+   public function test_name_field_must_be_unique_for_posting_a_tag(){
+    $tag=Tag::factory()->make()->toArray();
+        
+   dump($tag);
+    $response=Livewire::test(Tags::class)
+     ->set($tag)
+     ->call('savetags');
+      $lastTagName=Tag::first()->name;
+      dump($lastTagName);
+      $response->assertHasNoErrors('name');
+       
+       
+       $tag2=Tag::factory([
+        'name'=>$lastTagName
+      ])->make()->toArray();
+      
+    $response2=Livewire::test(Tags::class)
+     ->set($tag2)
+     ->call('savetags');
+     $response2->assertHasErrors('name');
+     $this->assertEquals(1,Tag::count());
+    
+         
+}
    public function test_admin_can_delete_a_tag(){
     //    $this->withoutExceptionHandling();
        $tag=Tag::factory()->create();
