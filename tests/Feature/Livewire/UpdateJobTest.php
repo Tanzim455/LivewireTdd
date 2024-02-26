@@ -15,26 +15,23 @@ class UpdateJobTest extends TestCase
 {
     /** @test */
     use RefreshDatabase;
-    public function job_creation_by_company(?int $times=1){
-        $category=Category::factory()->create();
-        $company=Company::factory()->create();
-        
-         Job::factory(
-            $times,
-            [
-                'category_id'=>$category->id,
-                'company_id'=>$company->id
-            ]
-            
-         )->create();
-         
-    }
+   
     
-    public function test_company_can_update_a_job()
+    public function test_company_can_update_a_job():void
 {
-     $this->withoutExceptionHandling();
+    $category=Category::factory()->create();
+    $company=Company::factory()->create();
     
-    $this->job_creation_by_company();
+     $job=Job::factory(
+        
+        [
+            'category_id'=>$category->id,
+            'company_id'=>$company->id
+        ]
+        
+     )->create();
+    
+    
     
    $job=Job::select('id','title','description')->first();
     $response = Livewire::test(UpdateJob::class)

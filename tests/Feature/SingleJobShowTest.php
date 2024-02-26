@@ -31,7 +31,7 @@ class SingleJobShowTest extends TestCase
     }
     public function test_user_can_see_details_on_single_job_page(): void
     {
-       $this->withoutExceptionHandling();
+       
         $this->job_creation_by_company();
         $job=Job::select('id','title','description')->first();
         $response=$this->get(route('job.show',['job'=>$job->id]));

@@ -36,7 +36,7 @@ class TagsTest extends TestCase
         $response->assertHasErrors('name');
     }
     public function test_admin_can_create_a_tag(){
-         $this->withoutExceptionHandling();
+       
        $tag=Tag::factory()->make()->toArray();
            
       

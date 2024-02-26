@@ -83,7 +83,7 @@ class CategoryTest extends TestCase
         {
             $this->withoutExceptionHandling();
             $category=ModelsCategory::factory()->create();
-            dump($category->name);
+            
             
             $response = Livewire::test(Category::class)
                 ->set('category', $category) // Set the job property
