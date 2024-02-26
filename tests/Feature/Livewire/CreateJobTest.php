@@ -40,14 +40,15 @@ class CreateJobTest extends TestCase
     }
 
     public function test_company_can_post_a_job(){
-        //  $this->withoutExceptionHandling();
+        //   $this->withoutExceptionHandling();
          $job=Job::factory()->make()->toArray();
          $company=Company::factory()->create();
          
          $category=Category::factory()->create();
+         
          $job['category_id']=$category['id'];
          $job['company_id']=$company['id'];
-        
+        //  dd($job);
         
         Livewire::test(CreateJob::class)
         ->set($job)
