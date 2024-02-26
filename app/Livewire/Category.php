@@ -11,7 +11,7 @@ class Category extends Component
 
     public function savecategory(){
         $this->validate([
-             'name'=>'required|min:3'
+             'name'=>'required|min:3|unique:categories'
         ]);
         
         ModelsCategory::create([

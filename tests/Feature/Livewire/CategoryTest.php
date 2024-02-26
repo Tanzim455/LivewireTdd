@@ -29,13 +29,33 @@ class CategoryTest extends TestCase
         ->assertViewHas('categories')
         ->assertViewIs('livewire.category');
     }
-    // public function test_name_field_is_required_for_posting_a_category(){
-    //     $response=Livewire::test(Category::class)
-    //     ->call('save')
-    //     ->set('name','');
+    public function test_name_field_is_required_for_posting_a_category(){
+        $response=Livewire::test(Category::class)
+        ->call('savecategory')
+        ->set('name','');
 
-    //     $response->assertHasErrors('name');
-    // }
+        $response->assertHasErrors('name');
+    }
+    public function test_name_field_must_be_unique_for_posting_a_category(){
+        $category=ModelsCategory::factory()->make()->toArray();
+            
+       
+        $response=Livewire::test(Category::class)
+         ->set($category)
+         ->call('savecategory');
+          $lastCategoryName=ModelsCategory::first()->name;
+          
+           $secondCategory=ModelsCategory::factory([
+             'name'=>$lastCategoryName
+           ])->make()->toArray();
+          $response->assertHasNoErrors('name');
+           $response2=Livewire::test(Category::class)
+          ->set($secondCategory)
+          ->call('savecategory');
+           $response2->assertHasErrors('name');
+         
+             
+    }
     
     public function test_admin_can_create_a_category(){
          
