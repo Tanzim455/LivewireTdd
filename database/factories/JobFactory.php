@@ -27,7 +27,7 @@ class JobFactory extends Factory
               'max_salary'=>fake()->numberBetween(30000,60000),
               'apply_url'=>fake()->url(),
               'expiration_date'=>Carbon::now()->addDay()->format('Y-m-d'),
-               'job_location'=>fake()->address(),
+               'job_location'=>fake()->word(),
                'job_location_type' => fake()->randomElement(['remote', 'onsite', 'hybrid']),
                 'category_id'=>'',
                 'company_id'=>''

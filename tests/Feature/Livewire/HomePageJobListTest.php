@@ -31,7 +31,7 @@ class HomePageJobListTest extends TestCase
           
     }
     public function test_home_page_returns_a_view(){
-        // $this->withoutExceptionHandling();
+        
         Livewire::test(HomePageJobList::class)
         ->assertViewHas('jobs')
         
@@ -92,4 +92,78 @@ foreach($jobs as $job){
 }
 
 }
+public function test_only_active_jobs_can_be_searched_from_homepage()
+    {
+        $company = Company::factory()->create();
+$company2 = Company::factory()->create();
+$company3 = Company::factory()->create();
+$category = Category::factory()->create();
+
+// Create 4 jobs for company 1, with an expiration date in the future
+$futureDate = Carbon::now()->addDays(30); // Adjust the number of days as needed
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company->id,
+    'expiration_date' => $futureDate,
+])->create();
+
+// Create 4 jobs for company 2, with an expiration date in the future
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company2->id,
+    'expiration_date' => $futureDate,
+])->create();
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company3->id,
+    'expiration_date' => $futureDate,
+])->create();
+// $job=Job::where('id',2)->first();
+
+$jobs = DB::table('jobs AS j1')
+->select('j1.company_id', 'j1.description', 'j1.title', 'j1.id', 'j1.expiration_date', 'j1.job_location', 'j1.min_salary', 'j1.max_salary', 'j1.category_id', 'companies.name AS company_name','categories.name as category_name')
+   
+    ->where('j1.expiration_date', '>', Carbon::now()->format('Y-m-d'))
+    
+    ->whereRaw('(
+        SELECT COUNT(*) 
+        FROM jobs AS j2 
+        WHERE j2.company_id = j1.company_id 
+        AND j2.expiration_date > NOW()
+        AND j2.id <= j1.id
+    ) <= 3')
+    ->join('companies','companies.id','j1.company_id')
+    ->join('categories','categories.id','j1.category_id')
+    ->get();
+    // dump($jobs->pluck('id'));
+    //Get all ids of Jobs
+    $title=Job::orderBy('id','DESC')->latest()->first()->max_salary;
+    dump($title);
+    if($title){
+        $jobs=Job::
+        
+        whereIn('id',$jobs->pluck('id')->toArray())
+        ->where('max_salary','<=',$title)
+         
+        
+        ->get();
+    //    dd($jobs);
+       dd($jobs->count());
+    }
+    if(!$title){
+        $jobs=Job::
+        
+        whereIn('id',$jobs->pluck('id')->toArray());
+        dd($jobs->count());
+    }
+   
+    }
+    
+    
+    // foreach($alljobs->get() as $job){
+    //     dump($job->company->name);
+    // }
+
+
+
 }
