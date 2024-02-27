@@ -42,7 +42,7 @@ class CreateJobTest extends TestCase
 
     public function test_company_can_post_a_job(){
         
-         
+         $this->withoutExceptionHandling();
          $company=Company::factory()->create();
          
          $category=Category::factory()->create();
@@ -60,7 +60,7 @@ class CreateJobTest extends TestCase
           $this->assertEquals(1,Job::count());
          $this->assertDatabaseHas('jobs',$job);
     }
-    public function test_company_can_post_a_job_with_tags(){
+    public function test_a_job_can_be_posted_by_company_alongside_jobs(){
         
         $company=Company::factory()->create();
          Tag::factory()->create();

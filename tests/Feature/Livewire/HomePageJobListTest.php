@@ -33,7 +33,7 @@ class HomePageJobListTest extends TestCase
     public function test_home_page_returns_a_view(){
         // $this->withoutExceptionHandling();
         Livewire::test(HomePageJobList::class)
-        ->assertViewHas('companyWithJobs')
+        ->assertViewHas('jobs')
         
         ->assertViewIs('livewire.home-page-job-list');;
           
@@ -64,18 +64,9 @@ Job::factory(4, [
     'company_id' => $company3->id,
     'expiration_date' => $futureDate,
 ])->create();
-// Get the jobs with expiration date greater than the current date, grouped by company, and limited to 3 per company
-// $jobs=DB::table('jobs')
-//     ->select(DB::raw('id, company_id,title,description'))
-//     ->where('expiration_date', '>', Carbon::now()->format('Y-m-d'))
-//     ->groupBy('company_id',function($query){
-//        $query->take(3);
-//     })
-    
-//     ->get();
-// dd($jobs->count());
+
 $jobs = DB::table('jobs AS j1')
-    ->select('j1.company_id', 'j1.description', 'j1.title')
+    ->select('j1.company_id', 'j1.description', 'j1.title','j1.id')
     ->where('j1.expiration_date', '>', Carbon::now()->format('Y-m-d'))
     ->whereRaw('(
         SELECT COUNT(*) 
@@ -85,22 +76,20 @@ $jobs = DB::table('jobs AS j1')
         AND j2.id <= j1.id
     ) <= 3')
     ->get();
-    //Elqoquent 
     
-
-
-
-
-
-
-
-
-     dd($jobs->count());
     
-// Now count the number of records in the collection
-// foreach($jobs as $job){
-//     dump($job->id);
-// }
+$response=$this->get(route('home'));
+
+
+
+
+
+
+
+foreach($jobs as $job){
+    $response->assertSee($job->title);
+    $response->assertSee($job->description);
+}
 
 }
 }

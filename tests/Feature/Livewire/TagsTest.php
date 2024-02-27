@@ -47,16 +47,17 @@ class TagsTest extends TestCase
         $this->assertEquals(1,Tag::count());
        $this->assertDatabaseHas('tags',$tag);
    }
-   public function test_name_field_must_be_unique_for_posting_a_tag(){
+   public function test_there_must_be_unique_name_field_for_creating_a_tag(){
+    $this->withoutExceptionHandling();
     $tag=Tag::factory()->make()->toArray();
-        
-   dump($tag);
+        dump($tag);
+  
     $response=Livewire::test(Tags::class)
      ->set($tag)
      ->call('savetags');
-      $lastTagName=Tag::first()->name;
-      dump($lastTagName);
-      $response->assertHasNoErrors('name');
+      $lastTagName=Tag::first();
+     
+       $response->assertHasNoErrors('name');
        
        
        $tag2=Tag::factory([
@@ -66,7 +67,7 @@ class TagsTest extends TestCase
     $response2=Livewire::test(Tags::class)
      ->set($tag2)
      ->call('savetags');
-     $response2->assertHasErrors('name');
+       $response2->assertHasErrors('name');
      $this->assertEquals(1,Tag::count());
     
          
