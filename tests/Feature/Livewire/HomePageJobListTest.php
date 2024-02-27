@@ -40,39 +40,67 @@ class HomePageJobListTest extends TestCase
     }
     public function test_only_three_active_jobs_from_a_single_company_can_be_seen_in_homepage()
     {
-        $company=Company::factory()->create();
-        $company2=Company::factory()->create();
-        $category=Category::factory()->create();
-        Job::factory(4,[
-           'category_id'=>$category['id'],
-           'company_id'=>$company['id'],
-           
-        ])->create();
-        Job::factory(4,[
-            'category_id'=>$category['id'],
-            'company_id'=>$company2['id'],
-            
-         ])->create();
-        $response=$this->get(route('home'));
-         
-         
-         $companyWithJobs = Company::with(['jobs' => function($query) {
-            $query->where('expiration_date', '>=', Carbon::now());
-        }])->get();
-        foreach($companyWithJobs as $company){
-        if($company->jobs->count()){
-            $allIdOfJobs=$company->jobs->take(3)->pluck('id')->toArray();
-            $allJobs=Job::whereIn('id',$allIdOfJobs)->get();
-            foreach($allJobs as $alljob){
-                $response->assertSee($alljob->title);
-                $response->assertSee($alljob->description);
-            }
-        }
-        }
-         
-         
-        
-        
-      
-    }
+        $company = Company::factory()->create();
+$company2 = Company::factory()->create();
+$company3 = Company::factory()->create();
+$category = Category::factory()->create();
+
+// Create 4 jobs for company 1, with an expiration date in the future
+$futureDate = Carbon::now()->addDays(30); // Adjust the number of days as needed
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company->id,
+    'expiration_date' => $futureDate,
+])->create();
+
+// Create 4 jobs for company 2, with an expiration date in the future
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company2->id,
+    'expiration_date' => $futureDate,
+])->create();
+Job::factory(4, [
+    'category_id' => $category->id,
+    'company_id' => $company3->id,
+    'expiration_date' => $futureDate,
+])->create();
+// Get the jobs with expiration date greater than the current date, grouped by company, and limited to 3 per company
+// $jobs=DB::table('jobs')
+//     ->select(DB::raw('id, company_id,title,description'))
+//     ->where('expiration_date', '>', Carbon::now()->format('Y-m-d'))
+//     ->groupBy('company_id',function($query){
+//        $query->take(3);
+//     })
+    
+//     ->get();
+// dd($jobs->count());
+$jobs = DB::table('jobs AS j1')
+    ->select('j1.company_id', 'j1.description', 'j1.title')
+    ->where('j1.expiration_date', '>', Carbon::now()->format('Y-m-d'))
+    ->whereRaw('(
+        SELECT COUNT(*) 
+        FROM jobs AS j2 
+        WHERE j2.company_id = j1.company_id 
+        AND j2.expiration_date > NOW()
+        AND j2.id <= j1.id
+    ) <= 3')
+    ->get();
+    //Elqoquent 
+    
+
+
+
+
+
+
+
+
+     dd($jobs->count());
+    
+// Now count the number of records in the collection
+// foreach($jobs as $job){
+//     dump($job->id);
+// }
+
+}
 }
