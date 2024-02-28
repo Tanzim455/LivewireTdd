@@ -43,7 +43,7 @@ class CreateJobTest extends TestCase
 
     public function test_company_can_post_a_job(){
         
-         $this->withoutExceptionHandling();
+         
          $company=Company::factory()->create();
          
          $category=Category::factory()->create();
@@ -62,7 +62,7 @@ class CreateJobTest extends TestCase
          $this->assertDatabaseHas('jobs',$job);
     }
     public function test_a_job_can_be_posted_by_company_alongside_tags(){
-        $this->withoutExceptionHandling();
+       
         $company=Company::factory()->create();
         Tag::factory(5)->create();
         //  dump($tags);
@@ -81,7 +81,7 @@ class CreateJobTest extends TestCase
          ->call('save');
        
         $latestJob=Job::latest()->first();
-       
+       dump($latestJob->id);
        
          $this->assertDatabaseHas('job_tag',[
               'job_id'=>$latestJob->id,

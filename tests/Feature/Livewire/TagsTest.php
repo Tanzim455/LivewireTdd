@@ -36,7 +36,7 @@ class TagsTest extends TestCase
         $response->assertHasErrors('name');
     }
     public function test_admin_can_create_a_tag(){
-       
+       $this->withoutExceptionHandling();
        $tag=Tag::factory()->make()->toArray();
            
       
@@ -50,7 +50,7 @@ class TagsTest extends TestCase
    public function test_there_must_be_unique_name_field_for_creating_a_tag(){
     $this->withoutExceptionHandling();
     $tag=Tag::factory()->make()->toArray();
-        dump($tag);
+        
   
     $response=Livewire::test(Tags::class)
      ->set($tag)
@@ -103,7 +103,7 @@ class TagsTest extends TestCase
 }
 public function test_admins_can_update_a_tag()
         {
-            $this->withoutExceptionHandling();
+            
             $tag=Tag::factory()->create();
             
             

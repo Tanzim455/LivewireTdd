@@ -28,7 +28,7 @@ class JobFactory extends Factory
               'apply_url'=>fake()->url(),
               'expiration_date'=>Carbon::now()->addDay()->format('Y-m-d'),
                'job_location'=>fake()->address(),
-               'job_location_type' => fake()->randomElement(['remote', 'onsite', 'hybrid']),
+               'job_location_type' => fake()->randomElement (['remote', 'onsite', 'hybrid']),
                 'category_id'=>'',
                 'company_id'=>''
                
